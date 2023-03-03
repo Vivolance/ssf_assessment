@@ -26,12 +26,18 @@
 					<option value="mineral_water">Mineral Water</option>
 					<option value="instant_noodles">Instant Noodles</option>
 				</select>
+				<div data-th-if="${#fields.hasErrors('item.name')}">
+					<span data-th-errors="*{item.name}" data-th-errorclass="error"></span>
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<td>Quantity:</td>
 			<td>
 				<input type="number" th:field="*{item.quantity}" size="4" placeholder="Quantity">
+				<div data-th-if="${#fields.hasErrors('item.quantity')}">
+					<span data-th-errors="*{item.quantity}" data-th-errorclass="error"></span>
+				</div>
 			</td>
 		</tr>
 	</table>

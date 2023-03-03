@@ -6,31 +6,33 @@
     <title>View 2</title>
 </head>
 <body>
+<!--
+    Feel free to make changes to this HTML but do no change the option in select
+-->
 
 <h1>Shipping Address</h1>
 
-<form data-th-object="${shippingaddress}">
+<form>
     <table>
         <tr>
             <td>Name:</td>
             <td>
-                <input type="text" th:field="*{name}">
-                <div data-th-if="${#fields.hasErrors('name')}">
-                    <span data-th-errors="*{name}" data-th-errorclass="error"></span>
+                <input type="text" th:field="*{shipping.name}">
+                <div data-th-if="${#fields.hasErrors('shipping.name')}">
+                    <span data-th-errors="*{shipping.name}" data-th-errorclass="error"></span>
                 </div>
             </td>
         </tr>
         <tr>
             <td>Address:</td>
             <td>
-                <input type="text" th:field="*{address}">
-                <div data-th-if="${#fields.hasErrors('address')}">
-                    <span data-th-errors="*{address}" data-th-errorclass="error"></span>
+                <input type="text" th:field="*{shipping.address}">
+                <div data-th-if="${#fields.hasErrors('shipping.address')}">
+                    <span data-th-errors="*{shipping.address}" data-th-errorclass="error"></span>
                 </div>
             </td>
         </tr>
     </table>
-
     <div>
         <button type="submit">Add</button>
     </div>

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 public class Item {
 
     private String name;
-    
+
     @Min(value=1, message="You must add at least 1 item")
     private int quantity;
 

@@ -21,33 +21,48 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import Batch02.SSF.Assessment.models.Quotation;
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import jakarta.json.JsonValue;
 
 @Service
 public class QuotationService {
     private static final String QUOTATION_SERVICE_URL = "https://quotation.chuklee.com/quotation";
 
     public static Quotation createQuotation(String json) throws IOException {
+        
+        //Deserializes the JSON String into a Quotation object
+        
         Quotation q = new Quotation();
         try(InputStream is = new ByteArrayInputStream(json.getBytes())){
-            JsonReader r = Json.createReader(is);
-            JsonObject o = r.readObject();
-            q.setQuoteId(o.getString("quoteId"));
-            JsonObject mainObj = o.getJsonObject("quotations");
+            JsonReader reader = Json.createReader(is);
+            JsonObject obj = reader.readObject();
+
+            q.setQuoteId(obj.getString("quoteId"));
+
+            JsonArray quotationsArray = obj.getJsonArray("quotations");
             HashMap<String, Float> quotations = new HashMap<>();
-            for (String key : mainObj.keySet()) {
-                quotations.put(key, (float) mainObj.getJsonNumber(key).doubleValue());
+
+            for (JsonValue value : quotationsArray) {
+                JsonObject quotationObject = (JsonObject) value;
+                String itemName = quotationObject.getString("item");
+                float unitPrice = (float) quotationObject.getJsonNumber("unitPrice").doubleValue();
+                quotations.put(itemName, unitPrice);
             }
+
             q.setQuotations(quotations);
         }
+
         return q;
     }
 
     public Quotation getQuotations(List<String> items) throws Exception {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(new ArrayList(Collections.singletonList(MediaType.APPLICATION_JSON)));
+
         JSONArray jsonArray = new JSONArray(items);
         HttpEntity<String> entity = new HttpEntity<>(jsonArray.toString(), headers);
         String quotationUrl = UriComponentsBuilder
@@ -55,6 +70,7 @@ public class QuotationService {
                 .toUriString();
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> resp = template.exchange(quotationUrl, HttpMethod.POST, entity, String.class);
+
         if (resp.getStatusCode() == HttpStatus.OK) {
             String result = resp.getBody();
             return QuotationService.createQuotation(result);

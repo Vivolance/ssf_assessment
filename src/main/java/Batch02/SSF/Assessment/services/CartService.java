@@ -44,6 +44,7 @@ public class CartService {
             errors.add(error);
         }
 
+
         if (!validQuantity(item.getQuantity())) {
             error = new FieldError("item", "quantity"
                     , "You must add at least one item");

@@ -29,4 +29,5 @@ public class Quotation {
     public Float getQuotation(String item) {
         return this.quotations.getOrDefault((Object)item, -1000000f);
     }
+
 }

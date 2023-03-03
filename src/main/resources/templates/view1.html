@@ -12,7 +12,7 @@
 
 <h1>Shopping Cart</h1>
 
-<form method="post" action="/addItem">
+<form data-th-action="@{/shippingaddress}">
 	<table>
 		<tr>
 			<td>Item:</td>
@@ -42,7 +42,7 @@
 		</tr>
 	</table>
 
-	<table border="1" style="margin-top: 2vh; margin-bottom: 2vh;">
+	<table border="1" style="margin-top: 2vh; margin-bottom: 2vh;" th:if="${not #lists.isEmpty(cart.items)}">
 		<thead>
 		<tr>
 			<th>Item</th>
@@ -51,14 +51,18 @@
 		</thead>
 		<tbody>
 		<tr th:each="item: ${cart.items}">
-			<td th:th:text="${item.name}"}></td>
+			<td th:text="${item.name}"></td>
 			<td th:text="${item.quantity}"></td>
 		</tr>
 		</tbody>
 	</table>
+	<div th:if="${#lists.isEmpty(cart.items)}">
+		Your cart is currently empty
+	</div>
 
 	<div>
-		<button type="submit">Add</button>
+		<button type="submit" formmethod="POST" formaction="/addItem">Add</button>
+		<button type="submit" formmethod="GET" formaction="/shippingaddress">Next</button>
 	</div>
 </form>
 

@@ -26,8 +26,7 @@ public class ShoppingCart {
         } else {
             this.itemsHashMap.put(itemName, item);
         }
-        // This is expensive as we have to reconstruct the List
-        // But its okay; we have to show the new list of items after every addition anyway.
+    
         this.items = updateList(this.itemsHashMap);
     }
 }

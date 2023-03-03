@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View 2</title>
+</head>
+<body>
+
+<h1>Shipping Address</h1>
+
+<form data-th-object="${shippingaddress}">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>
+                <input type="text" th:field="*{name}">
+                <div data-th-if="${#fields.hasErrors('name')}">
+                    <span data-th-errors="*{name}" data-th-errorclass="error"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>
+                <input type="text" th:field="*{address}">
+                <div data-th-if="${#fields.hasErrors('address')}">
+                    <span data-th-errors="*{address}" data-th-errorclass="error"></span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+</body>
+</html>

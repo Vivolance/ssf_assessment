@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
 import Batch02.SSF.Assessment.models.Item;
+import Batch02.SSF.Assessment.models.ShoppingCart;
 
 @Service
 public class CartService {
@@ -50,5 +51,9 @@ public class CartService {
         }
 
         return errors;
+    }
+
+    public static boolean validCart(ShoppingCart cart) {
+        return cart != null && cart.items.size() > 0;
     }
 }
